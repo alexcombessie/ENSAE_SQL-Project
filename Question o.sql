@@ -1,3 +1,8 @@
+/*o. Extraire pour chaque département, la proportion d’homme et la proportion de femmes qui sont clients. 
+(Colonne 1 : Departement, Colonne 2 : Proportion homme (%), Colonne 3 : Proportion femme)*/
+
+/*On commence par regarder, pour chaque département, l'ensemble des clients distincts. On ajoute à ces données le genre de chacun des clients en faisant un JOIN avec la table Client.
+Enfin, on agrège ces données pour obtenir les proportions voulues*/ 
 
 SELECT dpt, 1.0*nbHommes/(nbHommes+nbFemmes) AS prop_Hommes, 1.0*nbFemmes/(nbHommes+nbFemmes) AS prop_Femmes
 FROM

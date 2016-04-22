@@ -1,3 +1,9 @@
+/*p. Extraire la liste des Items les plus vendus en France pour les moins de 40 ans. 
+(Colonne 1 : ListeItems, Colonne 2 : quantité)*/
+
+/*On commence par créer des tables ItemQuantity avec pour chaque commande un id_item et la quantité commandée en se restreignant aux personne de mois de 40 ans
+(donc qui ont leur date de naissance après la date d'aujourd'hui moins 40 années). On fait ces tables pour les items vendus seuls, ainsi que pour les différents items vendus via des menus.*/
+
 DROP TABLE IF EXISTS ItemQuantity;
 CREATE TABLE ItemQuantity AS 
 SELECT Command.id_item AS id_item, SUM(Command.quantity) AS quantity
@@ -51,6 +57,9 @@ JOIN Cafe ON Cafe.id_cafe = Command.id_cafe
 WHERE Client.birth_date >= date('now', '-40 years') AND Command.id_menu NOT LIKE "" AND Cafe.country = "France"
 GROUP BY Menu.id_item4, Cafe.country
 ORDER BY quantity DESC;
+
+/*On fusionne ensuite ces tables pour les agréger et obtenir les résultats demandés. A noter qu'on a indiqué la taille des item puisque nous considérons que deux même produits
+avec des sizes différentes sont des items différents.*/
 
 SELECT Item.name_item, Item.size, SUM(temp_table.quantity) AS quantity
 FROM

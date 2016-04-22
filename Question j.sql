@@ -1,3 +1,8 @@
+/*j. Extraire le chiffre d’affaire moyen des cafés ayant un espace de co-working et celui des cafés n’en ayant pas. 
+(Colonne 1 : TypeCafe, Colonne 2 : CaMoyen)*/
+
+/*On commence par créer une table des prix de chaque menu, en sommant les prix des items correspondants*/
+
 DROP TABLE IF EXISTS PriceByMenu;
 CREATE TABLE PriceByMenu AS SELECT Country, id_menu, SUM(price*reduction) AS Price FROM 
 (
@@ -13,6 +18,8 @@ UNION ALL
 	  	SELECT * FROM (SELECT Menu.country AS Country, Menu.id_menu, id_item4 AS id_item, Carte.Price AS price, Menu.reduction FROM Menu
 	  JOIN Carte ON Carte.Country = Menu.country AND Carte.id_item = Menu.id_item4)
 	  ) GROUP BY Country, id_menu;
+	  
+/*On crée ensuite des tables intermédiaires CaMenu et CaCarte pour le CA réalisé par chaque café*/
 	  
 	  
 DROP TABLE IF EXISTS CaMenu;
@@ -33,6 +40,7 @@ JOIN Carte ON Command.id_item = Carte.id_item AND Cafe.country = Carte.Country
 WHERE Command.id_item IS NOT NULL
 GROUP BY Cafe.id_cafe, Cafe.coworking;
 
+/*Enfin, on agrège selon la présence ou non d'un espace de coworking*/
 
 SELECT coworking, avg(CA_Cafe) as CA_moyen
 FROM

@@ -1,3 +1,7 @@
-select count(1) as employes_75
-from Staff staff join Cafe cafe on staff.id_cafe = cafe.id_cafe
-where staff.end_date like '' and cafe.postal_code like '75%'
+/* a. a. Extraire le nombre d’employés dans le département du 75. 
+(Colonne 1 : nbemployes)*/
+
+SELECT COUNT(1) AS employes_75
+FROM Staff 
+JOIN Cafe ON Staff.id_cafe = Cafe.id_cafe
+WHERE Staff.end_date LIKE '' AND Cafe.postal_code LIKE '75%';
